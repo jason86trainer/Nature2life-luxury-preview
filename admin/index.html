@@ -1,12 +1,22 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Nature 2 Life Admin</title>
+
+    <!-- Tell Netlify CMS explicitly where the config is -->
+    <script>
+      window.CMS_CONFIG_PATH = "/admin/config.yml";
+    </script>
   </head>
   <body>
-    <p style="padding:16px">CMS loading…</p>
-    <script src="/admin/decap-cms.js"></script>
+    <!-- Mount point required by Netlify CMS -->
+    <div id="nc-root"></div>
+
+    <!-- Load CMS (try jsDelivr, fall back to unpkg if the first CDN is blocked) -->
+    <script src="https://cdn.jsdelivr.net/npm/netlify-cms@^2/dist/netlify-cms.js"
+      onerror="var s=document.createElement('script');s.src='https://unpkg.com/netlify-cms@^2/dist/netlify-cms.js';document.body.appendChild(s);">
+    </script>
   </body>
 </html>
