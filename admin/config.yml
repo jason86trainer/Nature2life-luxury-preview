@@ -1,7 +1,5 @@
 backend:
   name: test-repo
-  repo: jason86trainer/Nature2life-luxury-preview
-  branch: main
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
