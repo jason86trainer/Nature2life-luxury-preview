@@ -2,6 +2,9 @@ backend:
   name: github
   repo: jason86trainer/Nature2life-luxury-preview
   branch: main
+  base_url: https://nature2life-luxury-preview.vercel.app
+  auth_endpoint: /api/auth
+
 
 
 media_folder: "images/uploads"
