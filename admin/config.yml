@@ -1,5 +1,5 @@
 backend:
-  name: github
+  name: test-repo
   repo: jason86trainer/Nature2life-luxury-preview
   branch: main
 
