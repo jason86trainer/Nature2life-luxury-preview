@@ -1,0 +1,7 @@
+{
+  "name": "nature2life-luxury-preview",
+  "private": true,
+  "dependencies": {
+    "netlify-cms-oauth-provider-node": "0.2.0"
+  }
+}
