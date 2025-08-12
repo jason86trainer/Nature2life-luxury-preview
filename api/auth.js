@@ -1,13 +1,39 @@
-// api/auth.js
-// Minimal GitHub OAuth endpoint for Netlify/Decap CMS on Vercel
+import fetch from 'node-fetch';
 
 export default async function handler(req, res) {
-  // Lazy load to keep the function tiny
-  const { default: oauthHandler } = await import('netlify-cms-oauth-provider-node');
+  const { code } = req.query;
 
-  return oauthHandler({
-    clientId: process.env.GITHUB_CLIENT_ID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    // scopes are the default needed to write to your repo
-  })(req, res);
+  if (!code) {
+    return res.status(400).json({ error: 'No code provided' });
+  }
+
+  try {
+    // Exchange code for an access token
+    const tokenResponse = await fetch('https://github.com/login/oauth/access_token', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        client_id: process.env.GITHUB_CLIENT_ID,
+        client_secret: process.env.GITHUB_CLIENT_SECRET,
+        code,
+      }),
+    });
+
+    const tokenData = await tokenResponse.json();
+
+    if (tokenData.error) {
+      return res.status(400).json({ error: tokenData.error });
+    }
+
+    const accessToken = tokenData.access_token;
+
+    // Redirect back to Netlify CMS with the token in the URL
+    res.redirect(`/admin/#access_token=${accessToken}`);
+  } catch (error) {
+    console.error('OAuth error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 }
